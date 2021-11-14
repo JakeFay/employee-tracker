@@ -29,6 +29,14 @@ function getQuestion() {
                 viewAllEmployees();
                 break;
 
+            case 'add a department':
+                prompt([{
+                    type: 'input',
+                    name: 'add a department',
+                    message: 'Type the name of the department you would like to add',
+                }])
+                break;
+
             default:
                 process.exit();
                 break;
@@ -53,5 +61,11 @@ function viewAllEmployees() {
         console.table(data);
     }).then(() => getQuestion());
 };
+
+function addDepartment() {
+    db.addADepartment().then(([data]) => {
+        console.table(data);
+    }).then(() => getQuestion());
+}
 
 start();
