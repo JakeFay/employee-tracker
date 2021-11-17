@@ -1,6 +1,8 @@
 const { prompt } = require('inquirer');
 require('console.table');
-const db = require('./db')
+const db = require('./db');
+const inquirer = require('inquirer');
+const connection = require('./db/connection');
 
 
 
@@ -30,11 +32,15 @@ function getQuestion() {
                 break;
 
             case 'add a department':
-                prompt([{
+                inquirer.prompt([{
                     type: 'input',
-                    name: 'add a department',
+                    name: 'name',
                     message: 'Type the name of the department you would like to add',
                 }])
+                .then((data)=> {
+                    console.log(data)
+                    addDepartment(data);
+                })
                 break;
 
             default:
@@ -62,10 +68,9 @@ function viewAllEmployees() {
     }).then(() => getQuestion());
 };
 
-function addDepartment() {
-    db.addADepartment().then(([data]) => {
-        console.table(data);
-    }).then(() => getQuestion());
-}
+function addDepartment(answerObject) {
+    connection.query('insert into department set ?', answerObject)
+    .then(() => getQuestion());
+};
 
 start();

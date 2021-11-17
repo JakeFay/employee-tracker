@@ -9,7 +9,7 @@ class DB {
     }
 
     getAllRoles(){
-        return this.connection.promise().query('SELECT role.title, role.salary, role.department_id FROM role LEFT JOIN department ON role.department_id = department.name;')
+        return this.connection.promise().query('SELECT role.id, role.title, role.salary, department.name AS department FROM role JOIN department ON role.department_id = department.id')
     }
 
     getAllEmployees(){
@@ -18,7 +18,7 @@ class DB {
     }
 
     addADepartment(){
-        return this.connection.promise().query()
+        return this.connection.promise().query('INSERT INTO department SET ?', {name: HR})
     }
 
  
