@@ -3,6 +3,7 @@ require('console.table');
 const db = require('./db');
 const inquirer = require('inquirer');
 const connection = require('./db/connection');
+const { getAllEmployees, getAllRoles } = require('./db');
 
 
 
@@ -43,6 +44,26 @@ function getQuestion() {
                 })
                 break;
 
+            case 'update an employee role':
+                try{
+                //viewAllEmployees()
+                //viewAllRoles()
+                inquirer.prompt([{
+                    type: 'input',
+                    name: 'employeeId',
+                    message: 'What is the id of the employee you want to update?'
+                },{
+                    type: 'input',
+                    name: 'roleId',
+                    message: 'what is the new role Id for this employee?'
+                }
+            ]).then((data)=> {
+                updateRole(data)
+            })
+        }catch(err){
+            console.log(err)
+        }
+
             default:
                 process.exit();
                 break;
@@ -72,5 +93,12 @@ function addDepartment(answerObject) {
     connection.query('insert into department set ?', answerObject)
     .then(() => getQuestion());
 };
+
+function updateRole(data) {
+    connection.query('update employee.role_id set role_id = ? WHERE id = ?', [data.roleId, data.employeeId], (err, result)=>{
+        if (err) console.log(err)
+        console.log(result)
+    })
+}
 
 start();
