@@ -43,10 +43,40 @@ function getQuestion() {
                     })
                 break;
 
+            case 'add a role':
+                connection.query('SELECT * FROM department;', (err, data) => {
+                    if (err) console.log(err)
+                    console.table(data)
+                })
+               
+                prompt([{
+                    type: 'input',
+                    name: 'department_id',
+                    message: 'Type the department id for this position?',
+                },
+                {
+                    type: 'input',
+                    name: 'title',
+                    message: 'Type the name of the role you would like to add'
+                }, {
+                    type: 'input',
+                    name: 'salary',
+                    message: 'What is the salary for this position?'
+                }, ])
+                    .then((data) => {
+                        
+                        console.log(data)
+                        addRole(data);
+                    })
+                break;
+
+            case 'add an employee':
+                addEmployee()
+                break;
+
             case 'update employee':
-
                 update()
-
+                break;
 
             default:
                 process.exit();
@@ -75,35 +105,92 @@ function viewAllEmployees() {
 
 function addDepartment(answerObject) {
     connection.query('insert into department set ?', answerObject)
-        .then(() => getQuestion());
+        getQuestion();
 };
 
-function updateRole(data) {
-    connection.query('update employee.role_id set role_id = ? WHERE id = ?', [data.roleId, data.employeeId], (err, result) => {
+async function addRole(data) {
+
+
+    connection.query('insert into role set ?', data, (err, result) => {
         if (err) console.log(err)
-        console.log(result)
+        console.log('success')
+        getQuestion();
+    })
+};
+
+function updateEmployee(data) {
+    connection.query('update employee set  = ? WHERE  = ?', [data.roleId, data.employeeId], (err, result) => {
+        if (err) console.log(err)
+        console.log('success')
+        getQuestion();
     })
 }
-async function update(){
+
+async function addEmployee() {
     let data = await db.getAllRoles().then(([data]) => {
-         return data
-     })
-     let other = await db.getAllEmployees().then(([data]) => {
-         return data
-     })
-     console.table(data)
-     console.table(other)
- prompt([{
-     type: 'input',
-     name: 'employeeId',
-     message: 'What is the id of the employee you want to update?'
- },{
-     type: 'input',
-     name: 'roleId',
-     message: 'what is the new role Id for this employee?'
- }
- ]).then((data)=> {
- updateRole(data)
- })
- }
+        return data
+    })
+    let other = await db.getAllEmployees().then(([data]) => {
+        return data
+    })
+    console.table(data)
+    console.table(other)
+    prompt([{
+        type: 'input',
+        name: 'first_name',
+        message: 'Type emplyees first name.'
+    }, {
+        type: 'input',
+        name: 'last_name',
+        message: 'Type employees last name.'
+    }, {
+        type: 'input',
+        name: 'role_id',
+        message: 'type the employees role id.'
+    }, {
+        type: 'input',
+        name: 'manager_id',
+        message: 'what is the managers id for this employee?'
+    }]).then((data) => {
+        connection.query('insert into employee set  ?', data, (err, result) => {
+            if (err) console.log(err)
+            console.log('success')
+            getQuestion();
+        })
+    })
+
+    
+}
+
+
+function updateRole(data) {
+    connection.query('update employee set role_id = ? WHERE id = ?', [data.roleId, data.employeeId], (err, result) => {
+        if (err) console.log(err)
+        console.log('success')
+        getQuestion();
+    })
+}
+
+async function update() {
+    let data = await db.getAllRoles().then(([data]) => {
+        return data
+    })
+    let other = await db.getAllEmployees().then(([data]) => {
+        return data
+    })
+    console.table(data)
+    console.table(other)
+    prompt([{
+        type: 'input',
+        name: 'employeeId',
+        message: 'What is the id of the employee you want to update?'
+    }, {
+        type: 'input',
+        name: 'roleId',
+        message: 'what is the new role Id for this employee?'
+    }
+    ]).then((data) => {
+        updateRole(data)
+    })
+}
 start();

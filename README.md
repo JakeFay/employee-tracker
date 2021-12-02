@@ -1,4 +1,8 @@
-# employee-tracker
+# Employee Tracker 
+
+## Description
+
+This application will do the following.
 
 GIVEN a command-line application that accepts user input
 
@@ -24,4 +28,50 @@ WHEN I choose to add an employee
 THEN I am prompted to enter the employee’s first name, last name, role, and manager and that employee is added to the database
 
 WHEN I choose to update an employee role
-THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
+THEN I am prompted to select an employee to update and their new role and this information is updated in the database
+
+## Table of contents
+
+* [Installation](#installation)
+* [Usage](#usage)
+* [License](#license)
+* [Credits](#credits)
+* [Contributing](#contributing)
+* [tests](#tests)
+* [Questions](#questions)
+* [Link](#link)
+
+## Installation
+
+type in your `mysql` password in the password section of the 'db/connection.js' file. then run `npm i` to install packages. after that you can run `npm start` to start the app.
+
+## Usage
+
+video link below
+
+https://www.youtube.com/watch?v=l_SBnTzwIQs
+
+
+## License
+
+
+
+## Credits
+
+none
+
+## Contributing
+
+
+
+## Tests
+
+
+
+## Questions
+
+https://github.com/JakeFay/employee-tracker
+
+## Link
+
+https://jakefay.github.io/employee-tracker/
